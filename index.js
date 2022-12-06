@@ -20,13 +20,9 @@ mongoose.connect(uri, {
 // importar rutas
 const authRoutes = require('./routes/auth');
 const validaToken = require('./routes/validate-token');
-const admin = require('./routes/admin');
-const pedido = require('./routes/pedido');
 
 // route middlewares
 app.use('/api/user', authRoutes);
-app.use('/api/admin', validaToken, admin);
-app.use('/api/pedido', validaToken, pedido);
 
 // iniciar server
 const PORT = process.env.PORT || 3001;

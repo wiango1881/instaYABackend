@@ -148,5 +148,49 @@ router.post('/pedido', async (req, res) => {
         res.status(400).json(error)
     }
 })
+// otra forma
+router.get('/pedidoAll', (req, res) => {    
+    Pedido
+    .find()
+    .then((data) => res.json(data))
+    .catch((error) => res.json({ messaje: error }))
+})
+
+router.get('/pedido/:id', (req, res) => {
+    const { id } = req.params;    
+    Pedido
+    .findById(id)
+    .then((data) => res.json(data))
+    .catch((error) => res.json({ messaje: error }))
+})
+
+router.put('/pedido/:id', (req, res) => {
+    const { id } = req.params;
+    const { fecha, hora, largo, ancho, alto, peso, direccionRecogida, ciudadRecogida, nombreDestinatario, docuemntoDestinatario, direccionEntrega, ciudadEntrega } = req.body;  
+    Pedido
+    .updateOne({ _id: id }, {$set: { fecha, hora, largo, ancho, alto, peso, direccionRecogida, ciudadRecogida, nombreDestinatario, docuemntoDestinatario, direccionEntrega, ciudadEntrega } })
+    .then((data) => res.json(data))
+    .catch((error) => res.json({ messaje: error }))
+}) 
+
+router.delete('/pedido/:id', (req, res) => {
+    const { id } = req.params;
+    Pedido
+    .remove({ _id: id })
+    .then((data) => res.json(data))
+    .catch((error) => res.json({ messaje: error }))
+})
+
+/* router.get('/pedido', async (req, res) => {  
+    try {
+        const pedidoDB = await Pedido.find();
+        res.json({
+            error: null,
+            data: pedidoDB
+        })
+    } catch (error) {
+        res.status(400).json(error)
+    }
+}) */
 
 module.exports = router;
